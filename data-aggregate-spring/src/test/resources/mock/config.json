@@ -1,0 +1,42 @@
+[
+  {
+    "request": {
+      "uri": "/demo/user/save",
+      "method": "post"
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "errorMsg": "用户名不能为空",
+        "suc": false
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": "/demo/user/query",
+      "method": "post"
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "id": 2,
+        "name": "西城枢纽",
+        "email": "用户@",
+        "deliverEndTime": "1969-12-31T21:18:00Z",
+        "deliverTime": 1,
+        "deleteFlg": "0",
+        "createTime": "2015-11-12T06:19:16Z",
+        "createrId": "9319beca-d317-4a7b-9cdf-207a3cb68bef",
+        "updateTime": "2015-11-12T06:20:23Z",
+        "updaterId": "9319beca-d317-4a7b-9cdf-207a3cb68bef"
+      }
+    }
+  }
+]

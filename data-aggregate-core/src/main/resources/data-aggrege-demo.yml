@@ -1,0 +1,7 @@
+clzMetasCacheSize: 10000
+responseResolverCacheSize: 1000
+proxyMethodCacheSize: 10000
+maxBlockTimeout: 30000
+corePoolSize: 6
+keepAliveTime: 500
+workQueueSize: 800
