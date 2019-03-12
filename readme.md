@@ -154,7 +154,7 @@ public @interface AggregeBatchProxy {
     <version>1.0.0</version>
 </dependency>
 ``` 
-更多示例，请参考[快速开始](src/test/java/com/kxtx/middleware/aggregate/QuickStart_test.java)  
+更多示例，请参考[快速开始](data-aggregate-spring/src/test/java/com/kxtx/middleware/aggregate/QuickStart_test.java)  
 ```java
 @ToString
 @Getter
