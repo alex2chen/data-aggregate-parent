@@ -1,0 +1,8 @@
+com.github.middleware.aggregate.context.container.StartedAggregeListener
+com.github.middleware.aggregate.context.container.StopAggregeListener
+com.github.middleware.aggregate.context.session.InterceptorBeforeAggregeListener
+com.github.middleware.aggregate.context.session.DataBindBeforeAggregeListener
+com.github.middleware.aggregate.context.session.InterceptorAfterAggregeListener
+com.github.middleware.aggregate.context.session.ContractInvokeBeforeAggregeListener
+com.github.middleware.aggregate.context.session.ContractInvokeAfterAggregeListener
+com.github.middleware.aggregate.context.session.BreakDataBindAggregeEventListener

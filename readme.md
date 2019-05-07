@@ -72,7 +72,7 @@ public @interface AggregeProxy {
      * 目标服务名
      * 名称以#开头，代表从当前IOC中获取，否则类全名，如下：
      * #omsProductServcie
-     * com.kxtx.oms.contract.ProductServcie
+     * com.github.oms.contract.ProductServcie
      *
      * @return
      */
@@ -149,12 +149,12 @@ public @interface AggregeBatchProxy {
 ## spring3.x环境
 ```xml
 <dependency>
-    <groupId>com.kxtx.middleware</groupId>
+    <groupId>com.github.middleware</groupId>
     <artifactId>data-aggregate-spring</artifactId>
     <version>1.0.0</version>
 </dependency>
 ``` 
-更多示例，请参考[快速开始](data-aggregate-spring/src/test/java/com/kxtx/middleware/aggregate/QuickStart_test.java)  
+更多示例，请参考[快速开始](data-aggregate-spring/src/test/java/com/github/middleware/aggregate/QuickStart_test.java)  
 ```java
 @ToString
 @Getter
@@ -163,7 +163,7 @@ public class Order {
     private Integer id;
     private String orderNo;
     private Integer orderSourceType;   
-    @AggregeField(proxy = @AggregeProxy(name = "com.kxtx.middleware.aggregate.example.GlobalDictionaryCode", method = "getDictValue", params = {@AggregeProxyArg(paramValue = "orderSource"), @AggregeProxyArg(key = "orderSourceType")}))
+    @AggregeField(proxy = @AggregeProxy(name = "GlobalDictionaryCode", method = "getDictValue", params = {@AggregeProxyArg(paramValue = "orderSource"), @AggregeProxyArg(key = "orderSourceType")}))
     private String orderSource;  
     private Integer addressId;
     @AggregeField(batchProxy = @AggregeBatchProxy(list = @AggregeProxy(name = "#addressRepository", method = "getAddressByIds", params = {@AggregeProxyArg(argGetMode = ArgGetMode.item, key = "addressId")}),
@@ -209,7 +209,7 @@ public class OrderService {
 ### 1.Maven添加依赖
 ```xml
 <dependency>
-    <groupId>com.kxtx.middleware</groupId>
+    <groupId>com.github.middleware</groupId>
     <artifactId>data-aggregate-spring-boot-starter</artifactId>
     <version>1.0.0</version>
 </dependency>
@@ -218,7 +218,7 @@ public class OrderService {
 	@EnableDataAggregate
 ###	3.application.yml配置
 ```html
-kxtx:
+github:
     aggregate:
         clzMetasCacheSize: 10000
         responseResolverCacheSize: 1000

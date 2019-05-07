@@ -1,0 +1,6 @@
+com.github.middleware.aggregate.flow.support.ItemRequestValidateCommand
+com.github.middleware.aggregate.flow.support.ItemProxyArgBuildCommand
+com.github.middleware.aggregate.flow.support.ItemProxyFetchDataCommand
+com.github.middleware.aggregate.flow.support.ItemResponseCommand
+com.github.middleware.aggregate.flow.support.ItemsProxyArgBuildCommand
+com.github.middleware.aggregate.flow.support.ItemsProxyFetchDataCommand

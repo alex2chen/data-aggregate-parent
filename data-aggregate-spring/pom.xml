@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>data-aggregate-parent</artifactId>
-        <groupId>com.kxtx.middleware</groupId>
+        <groupId>com.github.middleware</groupId>
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -13,7 +13,7 @@
     <name>data-aggregate-spring</name>
     <dependencies>
         <dependency>
-            <groupId>com.kxtx.middleware</groupId>
+            <groupId>com.github.middleware</groupId>
             <artifactId>data-aggregate-core</artifactId>
             <version>1.0.0</version>
         </dependency>
@@ -61,7 +61,7 @@
                 <artifactId>lombok-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>com.kxtx</groupId>
+                <groupId>com.github.middleware</groupId>
                 <artifactId>mock-plugin-maven</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <configuration>

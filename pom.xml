@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.kxtx.middleware</groupId>
+    <groupId>com.github.middleware</groupId>
     <artifactId>data-aggregate-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
@@ -15,7 +15,6 @@
     </modules>
 
     <name>data-aggregate-parent</name>
-    <url>http://www.example.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

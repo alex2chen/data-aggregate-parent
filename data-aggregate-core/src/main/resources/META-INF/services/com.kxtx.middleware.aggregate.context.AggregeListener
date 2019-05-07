@@ -1,8 +1,0 @@
-com.kxtx.middleware.aggregate.context.container.StartedAggregeListener
-com.kxtx.middleware.aggregate.context.container.StopAggregeListener
-com.kxtx.middleware.aggregate.context.session.InterceptorBeforeAggregeListener
-com.kxtx.middleware.aggregate.context.session.DataBindBeforeAggregeListener
-com.kxtx.middleware.aggregate.context.session.InterceptorAfterAggregeListener
-com.kxtx.middleware.aggregate.context.session.ContractInvokeBeforeAggregeListener
-com.kxtx.middleware.aggregate.context.session.ContractInvokeAfterAggregeListener
-com.kxtx.middleware.aggregate.context.session.BreakDataBindAggregeEventListener
