@@ -54,13 +54,14 @@ public final class Proxys {
     }
 
     public static class ServiceEndpointCreators {
-        private ServiceEndpointCreators(){
+        private ServiceEndpointCreators() {
         }
+
         public static Object instance(String cls) {
             try {
                 return ClassUtils.forName(cls, Thread.currentThread().getContextClassLoader()).newInstance();
             } catch (Exception e) {
-                throw new AggregeException(e);
+                throw new AggregeException("实例化AggregeProxy.name[" + cls + "]失败,", e);
             }
         }
     }

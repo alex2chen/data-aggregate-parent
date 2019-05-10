@@ -163,7 +163,7 @@ public class Order {
     private Integer id;
     private String orderNo;
     private Integer orderSourceType;   
-    @AggregeField(proxy = @AggregeProxy(name = "GlobalDictionaryCode", method = "getDictValue", params = {@AggregeProxyArg(paramValue = "orderSource"), @AggregeProxyArg(key = "orderSourceType")}))
+    @AggregeField(proxy = @AggregeProxy(name = "com.github.middleware.aggregate.example.GlobalDictionaryCode", method = "getDictValue", params = {@AggregeProxyArg(paramValue = "orderSource"), @AggregeProxyArg(key = "orderSourceType")}))
     private String orderSource;  
     private Integer addressId;
     @AggregeField(batchProxy = @AggregeBatchProxy(list = @AggregeProxy(name = "#addressRepository", method = "getAddressByIds", params = {@AggregeProxyArg(argGetMode = ArgGetMode.item, key = "addressId")}),
