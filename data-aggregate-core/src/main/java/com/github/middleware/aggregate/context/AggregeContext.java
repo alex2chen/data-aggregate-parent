@@ -11,12 +11,7 @@ import java.util.Map;
  * @Date: created in 2019/1/14.
  */
 public class AggregeContext {
-    private static final ThreadLocal<AggregeContext> LOCAL = new ThreadLocal<AggregeContext>() {
-        @Override
-        protected AggregeContext initialValue() {
-            return new AggregeContext();
-        }
-    };
+    private static final ThreadLocal<AggregeContext> LOCAL =ThreadLocal.withInitial(AggregeContext::new);
     /**
      * prxoy(contract)所需的参数
      */

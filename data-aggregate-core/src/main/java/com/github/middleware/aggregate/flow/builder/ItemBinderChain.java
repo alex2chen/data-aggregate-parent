@@ -55,7 +55,6 @@ public class ItemBinderChain {
         return last;
     }
 
-    @Deprecated
     public List<ItemBinder> getItemHandleChain() {
         return itemHandles;
     }

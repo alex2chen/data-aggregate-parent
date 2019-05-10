@@ -16,6 +16,9 @@ import java.util.stream.Stream;
 public class Reflections {
     private static final Logger LOGGER = LoggerFactory.getLogger(Reflections.class);
 
+    private Reflections() {
+    }
+
     public static Method findMethod(Class<?> clazz, String name) {
         Assert.notNull(clazz, "Class must not be null");
         Assert.notNull(name, "Method name must not be null");

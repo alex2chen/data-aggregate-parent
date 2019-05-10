@@ -47,7 +47,7 @@ public @interface AggregeProxy {
 
     /**
      * 是否缓存
-     *
+     * @deprecated (不需要)
      * @return
      */
     @Deprecated

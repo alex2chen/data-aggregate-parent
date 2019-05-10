@@ -24,12 +24,7 @@ public class Invocation {
     /**
      * META_LOCAL主要服务于单个Item 某个Meta，区别于AggregeContext
      */
-    private final ThreadLocal<MetaItemContext> META_LOCAL = new ThreadLocal<MetaItemContext>() {
-        @Override
-        protected MetaItemContext initialValue() {
-            return new MetaItemContext();
-        }
-    };
+    private final ThreadLocal<MetaItemContext> META_LOCAL = ThreadLocal.withInitial(MetaItemContext::new);
     private MetaHolder itemElementMeta;
     /**
      * 原始数据，批量时才有效
@@ -74,12 +69,10 @@ public class Invocation {
         this.eventBus = eventBus;
     }
 
-    @Deprecated
     public MetaHolder getItemElementMeta() {
         return itemElementMeta;
     }
 
-    @Deprecated
     public void setItemElementMeta(MetaHolder itemElementMeta) {
         this.itemElementMeta = itemElementMeta;
     }

@@ -8,10 +8,7 @@ import com.github.middleware.aggregate.context.AggregeEvent;
  * @Date: created in 2019/1/17.
  */
 public class InterceptorAfterAggregeEvent extends AggregeEvent {
-    private Object result;
-    public InterceptorAfterAggregeEvent(Object source) {
-        super(source);
-    }
+    private transient Object result;
 
     public InterceptorAfterAggregeEvent(Object source, Object result) {
         super(source);

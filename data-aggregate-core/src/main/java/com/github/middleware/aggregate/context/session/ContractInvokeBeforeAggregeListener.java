@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Author: alex
@@ -32,7 +33,7 @@ public class ContractInvokeBeforeAggregeListener implements AggregeListener<Cont
         }
         if (event.getArg() instanceof List) {
             List eventArg = (List) event.getArg();
-            long nullCount = eventArg.stream().filter(x -> x == null).count();
+            long nullCount = eventArg.stream().filter(Objects::isNull).count();
             if (eventArg.size() == nullCount) {
                 return true;
             }

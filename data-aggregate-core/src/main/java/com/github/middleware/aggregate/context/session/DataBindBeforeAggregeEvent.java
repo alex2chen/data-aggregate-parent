@@ -8,11 +8,7 @@ import com.github.middleware.aggregate.context.AggregeEvent;
  * @Date: created in 2019/1/17.
  */
 public class DataBindBeforeAggregeEvent extends AggregeEvent {
-    private Object item;
-
-    public DataBindBeforeAggregeEvent(Object source) {
-        super(source);
-    }
+    private transient Object item;
 
     public DataBindBeforeAggregeEvent(Object source, Object item) {
         super(source);

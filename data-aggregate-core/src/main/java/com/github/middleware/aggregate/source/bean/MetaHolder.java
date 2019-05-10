@@ -26,9 +26,7 @@ public class MetaHolder {
     private AggregeProxyArg[] proxyArgMetas;
     private Map<String, Field> dependFields;
     private AggregeBatchProxy batchProxyMeta;
-    @Deprecated
     private PropertyDescriptor propertyDescriptor;
-    @Deprecated
     private PropertyEditor propertyEditor;
 
     public MetaHolder(Class sourceClz, Field field, AggregeField fieldMeta) {

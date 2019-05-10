@@ -24,21 +24,14 @@ public class DefaultExtensionLoader<T> implements ExtensionLoader<T> {
 
     public DefaultExtensionLoader(Class<T> clz, ClassLoader classLoader) {
         serviceLoader = ServiceLoader.load(clz, classLoader);
-
+        extTypes = new ArrayList<T>();
+        for (T service : serviceLoader) {
+            extTypes.add(service);
+        }
     }
 
     @Override
     public List<T> getExtensions() {
-        if (extTypes == null) {
-            synchronized (this) {
-                if (extTypes == null) {
-                    extTypes = new ArrayList<T>();
-                    for (T service : serviceLoader) {
-                        extTypes.add(service);
-                    }
-                }
-            }
-        }
         return extTypes;
     }
 

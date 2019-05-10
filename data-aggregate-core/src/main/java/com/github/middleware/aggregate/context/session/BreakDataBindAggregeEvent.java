@@ -9,11 +9,7 @@ import com.github.middleware.aggregate.flow.context.Invocation;
  * @Date: created in 2019/2/14.
  */
 public class BreakDataBindAggregeEvent extends AggregeEvent {
-    private Invocation invocation;
-    public BreakDataBindAggregeEvent(Object source) {
-        super(source);
-    }
-
+    private transient Invocation invocation;
     public BreakDataBindAggregeEvent(Object source, Invocation invocation) {
         super(source);
         this.invocation = invocation;

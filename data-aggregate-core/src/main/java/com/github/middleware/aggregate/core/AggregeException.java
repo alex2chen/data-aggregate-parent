@@ -10,20 +10,13 @@ public class AggregeException extends RuntimeException {
     private String errorCode;
     private String errorMessage;
 
-    public AggregeException() {
-        super();
-    }
-
-
     public AggregeException(String errorMessage) {
-        super((String) null);
-        this.errorMessage = errorMessage;
+        this(errorMessage, null);
     }
 
     public AggregeException(Throwable cause) {
-        super(null, cause);
+        this(null, cause);
     }
-
 
     public AggregeException(String errorMessage, Throwable cause) {
         super(null, cause);

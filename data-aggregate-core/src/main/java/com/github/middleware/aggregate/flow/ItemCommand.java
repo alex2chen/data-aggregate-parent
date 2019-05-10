@@ -8,12 +8,12 @@ package com.github.middleware.aggregate.flow;
 public interface ItemCommand {
     String getCommandName();
 
-    String ALL = "*";
-    String REQUESTVALIDATE = "RequestValidate";
-    String PROXYARGBUILD = "ProxyArgBuild";
-    String PROXYFETCHDATA = "ProxyFetchData";
-    String PROXYRESPONSERESOLVER = "ProxyResponseResolver";
-    String ITEMRESPONSE = "ItemResponse";
-    String BATCHPROXYARGBUILD = "batchProxyArgBuild";
-    String BATCHPROXYFETCHDATA = "batchProxyFetchData";
+    public static final String ALL = "*";
+    public static final String REQUESTVALIDATE = "RequestValidate";
+    public static final String PROXYARGBUILD = "ProxyArgBuild";
+    public static final String PROXYFETCHDATA = "ProxyFetchData";
+    public static final String PROXYRESPONSERESOLVER = "ProxyResponseResolver";
+    public static final String ITEMRESPONSE = "ItemResponse";
+    public static final String BATCHPROXYARGBUILD = "batchProxyArgBuild";
+    public static final String BATCHPROXYFETCHDATA = "batchProxyFetchData";
 }

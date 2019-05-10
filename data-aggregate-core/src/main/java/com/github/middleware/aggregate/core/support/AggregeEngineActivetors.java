@@ -9,7 +9,9 @@ import com.github.middleware.aggregate.core.AggregeEngineActivetor;
  */
 public class AggregeEngineActivetors {
     private static AggregeEngineActivetorFactory factory = new AggregeEngineActivetorFactory();
-
+    private AggregeEngineActivetors(){
+        
+    }
     public static AggregeEngineActivetor getEngineAcitvetor() {
         return factory.create(null);
     }

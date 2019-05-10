@@ -25,13 +25,13 @@ public class Order2 {
     private Integer orderSourceType;
     private String orderSource;
     private Integer addressId;
-    @AggregeField(batchProxy = @AggregeBatchProxy(list = @AggregeProxy(name = "#addressRepository", method = "getAddressByIds", params = {@AggregeProxyArg(argGetMode = ArgGetMode.item, key = "addressId")}),
-            item = @AggregeProxy(name = "#addressRepository", method = "getAddressById2", params = {@AggregeProxyArg(argGetMode = ArgGetMode.batch), @AggregeProxyArg(argGetMode = ArgGetMode.item, key = "addressId")})))
+    @AggregeField(batchProxy = @AggregeBatchProxy(list = @AggregeProxy(name = "#addressRepository", method = "getAddressByIds", params = {@AggregeProxyArg(argGetMode = ArgGetMode.ITEM, key = "addressId")}),
+            item = @AggregeProxy(name = "#addressRepository", method = "getAddressById2", params = {@AggregeProxyArg(argGetMode = ArgGetMode.BATCH), @AggregeProxyArg(argGetMode = ArgGetMode.ITEM, key = "addressId")})))
     private Address address;
     private List<Integer> productIds;
     @AggregeField(proxy = @AggregeProxy(name = "#productService", method = "listByIds", params = {@AggregeProxyArg(key = "productIds", paramName = "ids")}), batchProxy = @AggregeBatchProxy(
             list = @AggregeProxy(name = "#productService", method = "listByIds", params = {@AggregeProxyArg(key = "productIds")}),
-            item = @AggregeProxy(name = "#productService", method = "listByIds2", params = {@AggregeProxyArg(argGetMode = ArgGetMode.batch), @AggregeProxyArg(key = "productIds")})))
+            item = @AggregeProxy(name = "#productService", method = "listByIds2", params = {@AggregeProxyArg(argGetMode = ArgGetMode.BATCH), @AggregeProxyArg(key = "productIds")})))
     private List<Product> products;
     public Order2(int id) {
         this.id = id;

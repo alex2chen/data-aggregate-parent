@@ -9,12 +9,8 @@ import com.github.middleware.aggregate.flow.context.Invocation;
  * @Date: created in 2019/1/18.
  */
 public class ContractInvokeBeforeAggregeEvent extends AggregeEvent {
-    private Invocation invocation;
-    private Object arg;
-
-    public ContractInvokeBeforeAggregeEvent(Object source) {
-        super(source);
-    }
+    private transient Invocation invocation;
+    private transient Object arg;
 
     public ContractInvokeBeforeAggregeEvent(Object source, Object arg, Invocation invocation) {
         super(source);

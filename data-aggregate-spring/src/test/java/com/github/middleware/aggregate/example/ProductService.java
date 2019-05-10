@@ -18,7 +18,7 @@ public class ProductService {
         if (productIds == null) {
             return null;
         }
-        Thread.sleep(2000);
+        // Thread.sleep(2000);
         return productIds.stream().map(x -> new Product(x)).collect(Collectors.toList());
     }
 

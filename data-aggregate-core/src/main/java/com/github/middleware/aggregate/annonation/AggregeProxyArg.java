@@ -18,10 +18,10 @@ public @interface AggregeProxyArg {
      *
      * @return
      */
-    ArgGetMode argGetMode() default ArgGetMode.item;
+    ArgGetMode argGetMode() default ArgGetMode.ITEM;
 
     /**
-     * contract的参数名
+     * @deprecated (contract的参数名)
      *
      * @return
      */

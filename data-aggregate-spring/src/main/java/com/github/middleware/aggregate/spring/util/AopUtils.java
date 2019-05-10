@@ -13,6 +13,9 @@ import java.lang.reflect.Method;
  * @Date: created in 2019/1/23.
  */
 public class AopUtils {
+    private AopUtils() {
+    }
+
     public static Method getMethodFromTarget(JoinPoint joinPoint) {
         Method method = null;
         if (joinPoint.getSignature() instanceof MethodSignature) {

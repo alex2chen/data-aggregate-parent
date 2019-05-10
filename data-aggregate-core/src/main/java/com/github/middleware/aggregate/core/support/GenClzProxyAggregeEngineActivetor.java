@@ -25,7 +25,7 @@ public class GenClzProxyAggregeEngineActivetor implements AggregeEngineActivetor
          * 把后置处理，进入代码植入
          */
         //不需要返回值，一样不大
-        return null;
+        return delegete;
     }
 
     @Override

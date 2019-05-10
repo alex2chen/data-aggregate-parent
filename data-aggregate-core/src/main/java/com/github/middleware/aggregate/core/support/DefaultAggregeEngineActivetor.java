@@ -1,9 +1,6 @@
 package com.github.middleware.aggregate.core.support;
 
-import com.github.middleware.aggregate.core.AggregeEngine;
-import com.github.middleware.aggregate.core.AggregeEngineActivetor;
-import com.github.middleware.aggregate.core.AggregeException;
-import com.github.middleware.aggregate.core.MethodProceedCallback;
+import com.github.middleware.aggregate.core.*;
 import com.google.common.base.Preconditions;
 import com.github.middleware.aggregate.annonation.AggregeEnable;
 import com.github.middleware.aggregate.context.session.DataBindBeforeAggregeEvent;
@@ -24,7 +21,7 @@ public class DefaultAggregeEngineActivetor implements AggregeEngineActivetor {
     private AggregeEngine aggregeEngine;
 
     public DefaultAggregeEngineActivetor() {
-        ExtensionLoaders.getExtensionLoader(AggregeEngine.class).flatMap(x -> x.getExtension()).ifPresent(x -> aggregeEngine = x);
+        ExtensionLoaders.getExtensionLoader(AggregeEngine.class).flatMap(ExtensionLoader::getExtension).ifPresent(x -> aggregeEngine = x);
     }
 
     @Override
@@ -45,13 +42,12 @@ public class DefaultAggregeEngineActivetor implements AggregeEngineActivetor {
             Object result = aggregeEngine.dataBind(enable, item);
             aggregeEngine.getEventBus().post(new InterceptorAfterAggregeEvent(eventSource, result));
             return result;
+        } catch (AggregeException ex1) {
+            aggregeEngine.getEventBus().post(new InterceptorAfterAggregeEvent(eventSource, null));
+            throw ex1;
         } catch (Exception ex) {
             aggregeEngine.getEventBus().post(new InterceptorAfterAggregeEvent(eventSource, null));
-            if (ex instanceof AggregeException) {
-                throw ex;
-            } else {
-                throw new AggregeException(ex);
-            }
+            throw new AggregeException(ex);
         }
     }
 

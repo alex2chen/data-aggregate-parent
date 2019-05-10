@@ -14,6 +14,8 @@ import java.util.List;
  * @Date: created in 2019/1/14.
  */
 public class Steps {
+    private Steps() {
+    }
 
     public static StepBuilder getBuilder() {
         return new StepBuilder();
@@ -45,7 +47,7 @@ public class Steps {
             ExtensionLoaders.getExtensionLoader(ItemBinder.class).ifPresent(x -> {
                 List<ItemBinder> itemBinders = x.getExtensions();
                 Collections.sort(itemBinders, (o1, o2) -> o1.getOrder().compareTo(o2.getOrder()));
-                itemBinders.forEach(v -> next(v));
+                itemBinders.forEach(this::next);
             });
             return end();
         }
@@ -56,7 +58,7 @@ public class Steps {
 
         /**
          * 替换为loadAndSort
-         *
+         * @deprecated (废弃)
          * @return
          */
         @Deprecated

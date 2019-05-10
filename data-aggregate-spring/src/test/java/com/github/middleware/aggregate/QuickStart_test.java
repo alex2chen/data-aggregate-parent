@@ -30,7 +30,7 @@ public class QuickStart_test {
     /**
      * 手动的方式调用
      */
-    @Test
+    @Test(expected = NullPointerException.class)
     public void manualFire() {
         Method target = null;
         aggregeAspect.getEngineActivetor().intercept(target, () -> new Object());

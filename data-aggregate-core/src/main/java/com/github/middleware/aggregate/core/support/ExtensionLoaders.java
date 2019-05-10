@@ -16,6 +16,9 @@ public class ExtensionLoaders {
     private static final ConcurrentMap<String, ExtensionLoader<?>> EXTLOADERS = Maps.newConcurrentMap();
     private static final Object monitor = new Object();
 
+    private ExtensionLoaders() {
+    }
+
     public static <T> Optional<ExtensionLoader<T>> getExtensionLoader(Class<T> clz) {
         String key = loadClz(clz);
         return Optional.ofNullable((ExtensionLoader<T>) EXTLOADERS.get(key));

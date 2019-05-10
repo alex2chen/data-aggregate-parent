@@ -50,7 +50,6 @@ public class MergeProperties {
     public void setProxyMethodCacheSize(Integer proxyMethodCacheSize) {
         this.proxyMethodCacheSize = proxyMethodCacheSize;
     }
-    @Deprecated
     public String[] getScanPackages() {
         return scanPackages;
     }

@@ -16,10 +16,12 @@ import java.util.Map;
  * @Date: created in 2019/1/9.
  */
 public final class Proxys {
-    //todo:改掉
     private static final Map<String, Object> serviceEndpoint = Maps.newConcurrentMap();
 
     private static Object monitor = new Object();
+
+    private Proxys() {
+    }
 
     public static Object getBean(String proxyName) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(proxyName), "获取Client Proxy失败，参数AggregeProxy[name]为必填项。");
@@ -52,6 +54,8 @@ public final class Proxys {
     }
 
     public static class ServiceEndpointCreators {
+        private ServiceEndpointCreators(){
+        }
         public static Object instance(String cls) {
             try {
                 return ClassUtils.forName(cls, Thread.currentThread().getContextClassLoader()).newInstance();

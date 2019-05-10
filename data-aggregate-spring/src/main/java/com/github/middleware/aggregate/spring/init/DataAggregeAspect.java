@@ -23,15 +23,12 @@ import java.util.Optional;
  */
 @Aspect
 public class DataAggregeAspect implements InitializingBean, DisposableBean {
-    private static AggregeEngineActivetor ENGINE_ACTIVETOR;
+    private AggregeEngineActivetor ENGINE_ACTIVETOR;
     private MergeProperties config;
-
-    public DataAggregeAspect() {
-    }
 
     @Pointcut("@annotation(com.github.middleware.aggregate.annonation.AggregeEnable)")
     public void dataAggregeAnnotationPointcut() {
-
+        //todo
     }
 
     @Around("dataAggregeAnnotationPointcut()")

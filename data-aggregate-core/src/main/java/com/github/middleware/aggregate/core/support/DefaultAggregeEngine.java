@@ -5,6 +5,7 @@ import com.github.middleware.aggregate.context.AggregeContext;
 import com.github.middleware.aggregate.context.AggregeListener;
 import com.github.middleware.aggregate.core.AggregeEngine;
 import com.github.middleware.aggregate.core.AggregeException;
+import com.github.middleware.aggregate.core.ExtensionLoader;
 import com.github.middleware.aggregate.flow.ItemBinder;
 import com.github.middleware.aggregate.flow.ItemCommand;
 import com.github.middleware.aggregate.flow.builder.Steps;
@@ -70,7 +71,7 @@ public final class DefaultAggregeEngine implements AggregeEngine {
         threadPoolExecutor = new ThreadPoolExecutor(properties.getCorePoolSize(), properties.getCorePoolSize(), properties.getKeepAliveTime(),
                 TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(properties.getWorkQueueSize()), new NamedThreadFactory("aggrege"), new ThreadPoolExecutor.AbortPolicy());
         //实例化元数据读取组件
-        ExtensionLoaders.getExtensionLoader(MetaHolderFactory.class).flatMap(x -> x.getExtension()).ifPresent(x -> {
+        ExtensionLoaders.getExtensionLoader(MetaHolderFactory.class).flatMap(ExtensionLoader::getExtension).ifPresent(x -> {
             metaHolderFactory = x;
             metaHolderFactory.lasyInit(properties);
         });
@@ -134,7 +135,6 @@ public final class DefaultAggregeEngine implements AggregeEngine {
          * 为何直接使用invocation.setItemElementMeta(meta)?
          * 使用它必须对realMerge添加synchronized，为了提高并发而采用invocation.getMetaContext()
          */
-        //invocation.setItemElementMeta(meta);
         invocation.getMetaContext().setItemElementMeta(meta);
         try {
             if (invocation.getMetaContext().getFilterRules() == null && !invocation.getMetaContext().isBatch()) {

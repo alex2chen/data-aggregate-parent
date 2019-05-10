@@ -10,13 +10,13 @@ public enum ArgGetMode {
     /**
      * 从当前VO中获取
      */
-    item,
+    ITEM,
     /**
      * 从session中获取
      */
-    session,
+    SESSION,
     /**
      * 从batch中获取
      */
-    batch
+    BATCH
 }

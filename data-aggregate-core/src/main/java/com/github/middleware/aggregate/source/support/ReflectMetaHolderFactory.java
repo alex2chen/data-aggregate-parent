@@ -76,7 +76,8 @@ public class ReflectMetaHolderFactory implements MetaHolderFactory {
                 if (!Strings.isNullOrEmpty(param.key())) {
                     Field field = extFields.get(param.key());
                     if (field == null) {
-                        LOGGER.warn("failed to get field from class: {} by key: {}", clzName, param.key());
+                        String key=param.key();
+                        LOGGER.warn("failed to get field from class: {} by key: {}", clzName, key);
                     } else {
                         metaHolder.addDependFields(param.key(), extFields.get(param.key()));
                     }

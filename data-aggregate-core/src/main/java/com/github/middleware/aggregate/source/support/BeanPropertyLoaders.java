@@ -12,11 +12,15 @@ import java.util.stream.Stream;
 /**
  * @Author: alex
  * @Description:
+ * @deprecated (无用)
  * @Date: created in 2019/1/10.
  */
 @Deprecated
 public class BeanPropertyLoaders {
     private static Cache<String, BeanInfo> beanCahes;
+
+    private BeanPropertyLoaders() {
+    }
 
     public static PropertyDescriptor getPropDesc(Class sourceClz, String propertyName, int cacheSize) {
         try {

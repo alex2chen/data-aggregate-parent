@@ -48,7 +48,7 @@ public class ItemProxyArgBuildCommand extends AbstractItemCommand {
         List<Object> params = Lists.newArrayList();
         for (AggregeProxyArg arg : args) {
             if (Strings.isNullOrEmpty(arg.paramValue())) {
-                Preconditions.checkArgument(!(Strings.isNullOrEmpty(arg.key()) && arg.argGetMode() != ArgGetMode.batch), "参数AggregateProxyArg.key为必填项。");
+                Preconditions.checkArgument(!(Strings.isNullOrEmpty(arg.key()) && arg.argGetMode() != ArgGetMode.BATCH), "参数AggregateProxyArg.key为必填项。");
                 params.add(getParamValue(invocation, arg, item, isItemOfBatch));
             } else {
                 params.add(arg.paramValue());
@@ -59,11 +59,11 @@ public class ItemProxyArgBuildCommand extends AbstractItemCommand {
 
     private Object getParamValue(Invocation invocation, AggregeProxyArg arg, Object item, boolean isItemOfBatch) {
         switch (arg.argGetMode()) {
-            case item:
+            case ITEM:
                 return getPropertyValue(invocation, arg.key(), item, isItemOfBatch);
-            case session:
+            case SESSION:
                 return getSessionValue(invocation, arg.key());
-            case batch:
+            case BATCH:
                 return invocation.getMetaContext().getBatchProxyResult();
             default:
                 throw new AggregeException("未知的参数类型ArgGetMode=" + arg.argGetMode());
@@ -79,7 +79,6 @@ public class ItemProxyArgBuildCommand extends AbstractItemCommand {
         if (invocation.getMetaContext().isBatch()) {
             if (isItemOfBatch) {
                 return invocation.getMetaContext().getFiledValueCache(item.hashCode());
-                //return ReflectionUtils.getField(field, item);
             } else {
                 List<Object> fields = Lists.newArrayList();
                 invocation.getOrgItems().forEach(x -> Optional.ofNullable(ReflectionUtils.getField(field, x)).ifPresent(y -> {
