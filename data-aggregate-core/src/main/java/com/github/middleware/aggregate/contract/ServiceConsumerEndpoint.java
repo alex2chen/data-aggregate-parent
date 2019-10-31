@@ -7,5 +7,5 @@ package com.github.middleware.aggregate.contract;
  * @Date: created in 2019/1/9.
  */
 public interface ServiceConsumerEndpoint {
-    Object getServiceBean(String beanName);
+    Object getServiceBean(String beanName, Object applicationContext);
 }

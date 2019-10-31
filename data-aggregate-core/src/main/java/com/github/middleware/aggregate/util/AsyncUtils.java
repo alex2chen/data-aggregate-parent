@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @Description:
  * @Date: created in 2019/2/14.
  */
-public class AsyncUtils {
+public abstract class AsyncUtils {
     private AsyncUtils() {
     }
 

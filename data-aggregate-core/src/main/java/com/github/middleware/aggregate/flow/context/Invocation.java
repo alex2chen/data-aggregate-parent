@@ -15,7 +15,7 @@ import java.util.List;
  * @Date: created in 2019/1/11.
  */
 public class Invocation {
-    private AggregeEnable enable;
+    private Boolean parallel;
     private EventBus eventBus;
     /**
      * 为何要定义aggregeContext？主要是ItemBinder有多线程不能使用AggregeContext.getContext()
@@ -30,11 +30,20 @@ public class Invocation {
      * 原始数据，批量时才有效
      */
     protected List<Object> orgItems;
+    private Object springIOC;
 
-    public Invocation(AggregeEnable enable, EventBus eventBus, AggregeContext aggregeContext) {
-        this.enable = enable;
+    public Invocation(Boolean parallel, EventBus eventBus, AggregeContext aggregeContext) {
+        this.parallel = parallel;
         this.eventBus = eventBus;
         this.aggregeContext = aggregeContext;
+    }
+
+    public Boolean getParallel() {
+        return parallel;
+    }
+
+    public void setParallel(Boolean parallel) {
+        this.parallel = parallel;
     }
 
     public AggregeContext getAggregeContext() {
@@ -51,14 +60,6 @@ public class Invocation {
 
     public void removeMetaContext() {
         META_LOCAL.remove();
-    }
-
-    public AggregeEnable getEnable() {
-        return enable;
-    }
-
-    public void setEnable(AggregeEnable enable) {
-        this.enable = enable;
     }
 
     public EventBus getEventBus() {
@@ -83,6 +84,14 @@ public class Invocation {
 
     public void setOrgItems(List<Object> orgItems) {
         this.orgItems = orgItems;
+    }
+
+    public Object getSpringIOC() {
+        return springIOC;
+    }
+
+    public void setSpringIOC(Object springIOC) {
+        this.springIOC = springIOC;
     }
 
     /**

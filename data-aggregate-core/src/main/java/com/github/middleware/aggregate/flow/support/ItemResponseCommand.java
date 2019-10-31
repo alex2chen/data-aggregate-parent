@@ -23,9 +23,8 @@ public class ItemResponseCommand extends AbstractItemCommand {
     @Override
     public void handle(Object item, Invocation invocation) {
         try {
-            invocation.getMetaContext().getItemElementMeta().getSourceField().setAccessible(true);
-            invocation.getMetaContext().getItemElementMeta().getSourceField().set(item, invocation.getMetaContext().getProxyResult());
-        } catch (IllegalAccessException e) {
+            invocation.getMetaContext().getItemElementMeta().getSourceField().setField(item, invocation.getMetaContext().getProxyResult());
+        } catch (Exception e) {
             throw new AggregeException(e);
         }
     }

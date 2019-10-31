@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * @Description:
  * @Date: created in 2019/1/9.
  */
-public class RegexMatcher {
+public abstract class RegexMatcher {
     private RegexMatcher() {
     }
 

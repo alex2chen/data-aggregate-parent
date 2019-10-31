@@ -18,7 +18,7 @@ public interface AggregeEngine {
 
     void stop();
 
-    Object dataBind(AggregeEnable enable, Object item);
+    Object dataBind(RequestPayLoad requestPayLoad);
 
     EventBus getEventBus();
 }

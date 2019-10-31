@@ -20,7 +20,7 @@ public class ItemRequestValidateCommand extends AbstractItemCommand {
         Preconditions.checkNotNull(item, "参数校验失败，item为必填项。");
         Preconditions.checkNotNull(invocation, "参数校验失败，invocation为必填项。");
         // 提前终止执行链
-        if (invocation.getEnable() == null || invocation.getMetaContext().getItemElementMeta() == null) {
+        if (invocation.getMetaContext().getItemElementMeta() == null) {
             LOGGER.warn("item[{}]元数据配置有误.", item);
             invocation.getEventBus().post(new BreakDataBindAggregeEvent(this, invocation));
         }

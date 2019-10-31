@@ -20,6 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <aggregate.verion>1.1.0</aggregate.verion>
     </properties>
 
     <dependencyManagement>
@@ -73,6 +74,11 @@
                 <groupId>org.javatuples</groupId>
                 <artifactId>javatuples</artifactId>
                 <version>1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>3.2.7</version>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>

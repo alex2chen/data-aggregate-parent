@@ -2,7 +2,8 @@ package com.github.middleware.aggregate.flow.support;
 
 import com.github.middleware.aggregate.config.MergeProperties;
 import com.github.middleware.aggregate.flow.ItemCommand;
-import com.github.middleware.aggregate.util.Reflections;
+import com.github.middleware.aggregate.source.bean.FieldVisitor;
+import com.github.middleware.aggregate.source.bean.MethodVisitor;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.cache.Cache;
@@ -17,10 +18,7 @@ import com.github.middleware.aggregate.contract.support.Proxys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ClassUtils;
-import org.springframework.util.ReflectionUtils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
@@ -31,7 +29,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class ItemProxyFetchDataCommand extends AbstractItemCommand {
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemProxyFetchDataCommand.class);
-    private Cache<String, Method> proxyMethodCache;
+    private Cache<String, MethodVisitor> proxyMethodCache;
     private Cache<String, ResponseResolver> responseResolverCache;
     private String remoteErrorMsg = "调用远程服务出错[%s.%s]";
 
@@ -67,7 +65,7 @@ public class ItemProxyFetchDataCommand extends AbstractItemCommand {
         if (invocation.getMetaContext().isBatch()) {
             if (isItemOfBatch) {
                 invocation.getEventBus().post(new ContractInvokeBeforeAggregeEvent(fireSource, invocation.getMetaContext().getProxyParams(), invocation));
-                proxy = Proxys.getBean(invocation.getMetaContext().getItemElementMeta().getBatchProxyMeta().item().name());
+                proxy = Proxys.getBean(invocation.getMetaContext().getItemElementMeta().getBatchProxyMeta().item().name(), invocation.getSpringIOC());
                 methodName = invocation.getMetaContext().getItemElementMeta().getBatchProxyMeta().item().method();
                 resolver = invocation.getMetaContext().getItemElementMeta().getBatchProxyMeta().item().resolver();
                 if (invocation.getMetaContext().getProxyParams() != null) {
@@ -75,7 +73,7 @@ public class ItemProxyFetchDataCommand extends AbstractItemCommand {
                 }
             } else {
                 invocation.getEventBus().post(new ContractInvokeBeforeAggregeEvent(fireSource, invocation.getMetaContext().getBatchProxyParams(), invocation));
-                proxy = Proxys.getBean(invocation.getMetaContext().getItemElementMeta().getBatchProxyMeta().list().name());
+                proxy = Proxys.getBean(invocation.getMetaContext().getItemElementMeta().getBatchProxyMeta().list().name(), invocation.getSpringIOC());
                 methodName = invocation.getMetaContext().getItemElementMeta().getBatchProxyMeta().list().method();
                 resolver = invocation.getMetaContext().getItemElementMeta().getBatchProxyMeta().list().resolver();
                 if (invocation.getMetaContext().getBatchProxyParams() != null) {
@@ -89,7 +87,7 @@ public class ItemProxyFetchDataCommand extends AbstractItemCommand {
                 LOGGER.warn("{} 配置AggregeField[proxy]缺失，不做聚合填充!", fireSource);
                 return null;
             }
-            proxy = Proxys.getBean(invocation.getMetaContext().getItemElementMeta().getProxyMeta().name());
+            proxy = Proxys.getBean(invocation.getMetaContext().getItemElementMeta().getProxyMeta().name(), invocation.getSpringIOC());
             methodName = invocation.getMetaContext().getItemElementMeta().getProxyMeta().method();
             resolver = invocation.getMetaContext().getItemElementMeta().getProxyMeta().resolver();
             if (invocation.getMetaContext().getProxyParams() != null) {
@@ -115,16 +113,16 @@ public class ItemProxyFetchDataCommand extends AbstractItemCommand {
         }
     }
 
-    private String getFireSource(Field field) {
-        return String.format("%s.%s", field.getDeclaringClass().getTypeName(), field.getName());
+    private String getFireSource(FieldVisitor field) {
+        return String.format("%s.%s", field.getSource().getDeclaringClass().getTypeName(), field.getSource().getName());
     }
 
     private Object request(Object proxy, String methodName, Object[] args, boolean ignoreError) {
         Preconditions.checkNotNull(!Strings.isNullOrEmpty(methodName), "参数校验失败，AggregeProxy.method为必填项。");
         String cacheName = proxy.getClass().getName() + methodName;
         try {
-            Method method = proxyMethodCache.get(cacheName, () -> Reflections.findMethod(proxy.getClass(), methodName));
-            return ReflectionUtils.invokeMethod(method, proxy, args);
+            MethodVisitor method = proxyMethodCache.get(cacheName, () -> new MethodVisitor(proxy.getClass(), methodName, args));
+            return method.invokeMethod(proxy, args);
         } catch (Exception ex) {
             if (ignoreError) {
                 LOGGER.error(String.format(remoteErrorMsg, proxy.getClass().getName(), methodName), ex);

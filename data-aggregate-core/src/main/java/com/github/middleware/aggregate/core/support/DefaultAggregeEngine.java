@@ -6,6 +6,7 @@ import com.github.middleware.aggregate.context.AggregeListener;
 import com.github.middleware.aggregate.core.AggregeEngine;
 import com.github.middleware.aggregate.core.AggregeException;
 import com.github.middleware.aggregate.core.ExtensionLoader;
+import com.github.middleware.aggregate.core.RequestPayLoad;
 import com.github.middleware.aggregate.flow.ItemBinder;
 import com.github.middleware.aggregate.flow.ItemCommand;
 import com.github.middleware.aggregate.flow.builder.Steps;
@@ -98,17 +99,18 @@ public final class DefaultAggregeEngine implements AggregeEngine {
     }
 
     @Override
-    public Object dataBind(AggregeEnable enable, Object item) {
+    public Object dataBind(RequestPayLoad request) {
         Preconditions.checkArgument(start.get(), "AggregeEngine未启动,请确认用法是否正确!");
-        if (item == null) {
+        if (request.getData() == null) {
             return null;
         }
-        Invocation invocation = new Invocation(enable, eventBus, AggregeContext.getContext());
-        if (item instanceof List) {
-            List<Object> list = (List<Object>) item;
+        Invocation invocation = new Invocation(request.getParallel(), eventBus, AggregeContext.getContext());
+        invocation.setSpringIOC(request.getSpringIOC());
+        if (request.getData() instanceof List) {
+            List<Object> list = (List<Object>) request.getData();
             return mergeItems(list, invocation);
         }
-        return mergeItem(item.getClass(), item, invocation);
+        return mergeItem(request.getData().getClass(), request.getData(), invocation);
     }
 
     private Object mergeItem(Class<?> sourceCls, Object item, Invocation invocation) {
@@ -116,7 +118,7 @@ public final class DefaultAggregeEngine implements AggregeEngine {
         if (metas == null || metas.isEmpty()) {
             return item;
         }
-        boolean parallel = invocation.getEnable().parallel();
+        boolean parallel = invocation.getParallel();
         if (parallel) {
             Flowable.fromIterable(() -> metas.iterator()).parallel().runOn(Schedulers.from(threadPoolExecutor)).map(x -> {
                 realMerge(x, invocation, item);

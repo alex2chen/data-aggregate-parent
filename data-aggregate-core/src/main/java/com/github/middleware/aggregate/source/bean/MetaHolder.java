@@ -20,18 +20,18 @@ import java.util.Optional;
  */
 public class MetaHolder {
     private Class sourceClz;
-    private Field sourceField;
+    private FieldVisitor sourceField;
     private AggregeField fieldMeta;
     private AggregeProxy proxyMeta;
     private AggregeProxyArg[] proxyArgMetas;
-    private Map<String, Field> dependFields;
+    private Map<String, FieldVisitor> dependFields;
     private AggregeBatchProxy batchProxyMeta;
     private PropertyDescriptor propertyDescriptor;
     private PropertyEditor propertyEditor;
 
     public MetaHolder(Class sourceClz, Field field, AggregeField fieldMeta) {
         this.sourceClz = sourceClz;
-        this.sourceField = field;
+        this.sourceField = new FieldVisitor(field);
         Optional.ofNullable(fieldMeta).ifPresent(x -> {
             this.fieldMeta = fieldMeta;
             if (x.proxy() != null) {
@@ -53,11 +53,11 @@ public class MetaHolder {
         this.sourceClz = sourceClz;
     }
 
-    public Field getSourceField() {
+    public FieldVisitor getSourceField() {
         return sourceField;
     }
 
-    public void setSourceField(Field sourceField) {
+    public void setSourceField(FieldVisitor sourceField) {
         this.sourceField = sourceField;
     }
 
@@ -85,16 +85,16 @@ public class MetaHolder {
         this.proxyArgMetas = proxyArgMetas;
     }
 
-    public Map<String, Field> getDependFields() {
+    public Map<String, FieldVisitor> getDependFields() {
         return dependFields;
     }
 
-    public void setDependFields(Map<String, Field> dependFields) {
+    public void setDependFields(Map<String, FieldVisitor> dependFields) {
         this.dependFields = dependFields;
     }
 
     public void addDependFields(String name, Field dependField) {
-        this.dependFields.put(name, dependField);
+        this.dependFields.put(name, new FieldVisitor(dependField));
     }
 
     public AggregeBatchProxy getBatchProxyMeta() {

@@ -1,13 +1,19 @@
 package com.github.middleware.aggregate;
 
+import com.github.middleware.aggregate.context.AggregeContext;
+import com.github.middleware.aggregate.core.RequestPayLoad;
+import com.github.middleware.aggregate.core.support.AggregeEngineActivetors;
 import com.github.middleware.aggregate.example.OrderService;
 import com.github.middleware.aggregate.example.domain.Order;
 import com.github.middleware.aggregate.example.domain.Order2;
 import com.github.middleware.aggregate.spring.init.DataAggregeAspect;
+import com.google.common.collect.Lists;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -26,14 +32,26 @@ public class QuickStart_test {
     private OrderService orderService;
     @Autowired
     private DataAggregeAspect aggregeAspect;
+    @Autowired
+    private ApplicationContext applicationContext;
+
+    @BeforeClass
+    public static void init() {
+        System.setProperty("aggregate.isFast", "true");
+    }
 
     /**
      * 手动的方式调用
+     * 很多时候，我们并不需要AOP的模式运行的，提供工具模式
      */
-    @Test(expected = NullPointerException.class)
+    @Test()
     public void manualFire() {
-        Method target = null;
-        aggregeAspect.getEngineActivetor().intercept(target, () -> new Object());
+        Order order = new Order(1);
+        order.setProductIds(Lists.newArrayList(1));
+        order.setOrderSourceType(1);
+        RequestPayLoad<Order> request = new RequestPayLoad("manualFire", applicationContext, order, true);
+        AggregeEngineActivetors.getEngineAcitvetorStateful().intercept(request);
+        System.out.println(order);
     }
 
     /**

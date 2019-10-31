@@ -2,15 +2,13 @@ package com.github.middleware.aggregate.flow.support;
 
 import com.github.middleware.aggregate.flow.ItemCommand;
 import com.github.middleware.aggregate.flow.context.Invocation;
+import com.github.middleware.aggregate.source.bean.FieldVisitor;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.github.middleware.aggregate.annonation.AggregeProxyArg;
 import com.github.middleware.aggregate.constant.ArgGetMode;
 import com.github.middleware.aggregate.core.AggregeException;
-import org.springframework.util.ReflectionUtils;
-
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -71,17 +69,16 @@ public class ItemProxyArgBuildCommand extends AbstractItemCommand {
     }
 
     private Object getPropertyValue(Invocation invocation, String name, Object item, boolean isItemOfBatch) {
-        Map<String, Field> dependFields = invocation.getMetaContext().getItemElementMeta().getDependFields();
+        Map<String, FieldVisitor> dependFields = invocation.getMetaContext().getItemElementMeta().getDependFields();
         Preconditions.checkNotNull(dependFields, "failed to get dependFields from class: %s", item.getClass().getName());
-        Field field = dependFields.get(name);
+        FieldVisitor field = dependFields.get(name);
         Preconditions.checkNotNull(field, "failed to get field[%s] from class: %s", name, item.getClass().getName());
-        field.setAccessible(true);
         if (invocation.getMetaContext().isBatch()) {
             if (isItemOfBatch) {
                 return invocation.getMetaContext().getFiledValueCache(item.hashCode());
             } else {
                 List<Object> fields = Lists.newArrayList();
-                invocation.getOrgItems().forEach(x -> Optional.ofNullable(ReflectionUtils.getField(field, x)).ifPresent(y -> {
+                invocation.getOrgItems().forEach(x -> Optional.ofNullable(field.getField(x)).ifPresent(y -> {
                     /**
                      * 优化：缓存key为item的hash
                      */
@@ -95,7 +92,7 @@ public class ItemProxyArgBuildCommand extends AbstractItemCommand {
                 return fields.isEmpty() ? null : fields;
             }
         } else {
-            return ReflectionUtils.getField(field, item);
+            return field.getField(item);
         }
     }
 

@@ -23,13 +23,13 @@ public final class Proxys {
     private Proxys() {
     }
 
-    public static Object getBean(String proxyName) {
+    public static Object getBean(String proxyName, Object springIOC) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(proxyName), "获取Client Proxy失败，参数AggregeProxy[name]为必填项。");
         if (serviceEndpoint.containsKey(proxyName)) {
             return serviceEndpoint.get(proxyName);
         }
         if (proxyName.startsWith("#")) {
-            loadBean(proxyName);
+            loadBean(proxyName, springIOC);
         } else {
             newBean(proxyName);
         }
@@ -43,11 +43,11 @@ public final class Proxys {
         }
     }
 
-    private static void loadBean(String beanName) {
+    private static void loadBean(String beanName, Object applicationContext) {
         synchronized (monitor) {
             ExtensionLoaders.getExtensionLoader(ServiceConsumerEndpoint.class).flatMap(x -> x.getExtension()).ifPresent(x -> {
                 String name = beanName.substring(1);
-                Object serviceBean = x.getServiceBean(name);
+                Object serviceBean = x.getServiceBean(name, applicationContext);
                 serviceEndpoint.put(beanName, serviceBean);
             });
         }

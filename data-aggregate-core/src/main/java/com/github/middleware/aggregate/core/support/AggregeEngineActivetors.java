@@ -8,16 +8,16 @@ import com.github.middleware.aggregate.core.AggregeEngineActivetor;
  * @Date: created in 2019/1/15.
  */
 public class AggregeEngineActivetors {
-    private static AggregeEngineActivetorFactory factory = new AggregeEngineActivetorFactory();
-    private AggregeEngineActivetors(){
-        
-    }
-    public static AggregeEngineActivetor getEngineAcitvetor() {
-        return factory.create(null);
+    private AggregeEngineActivetors() {
+
     }
 
-    public static AggregeEngineActivetor getEngineAcitvetor(Object clientService) {
-        return factory.create(clientService);
+    public static AggregeEngineActivetor getEngineAcitvetor() {
+        return AggregeEngineActivetorFactory.getInstance().create(null);
+    }
+
+    public static AggregeEngineActivetor getEngineAcitvetorStateful() {
+        return AggregeEngineActivetorFactory.getInstance().create(true);
     }
 
 }

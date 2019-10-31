@@ -5,6 +5,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
     <bean:component-scan base-package="com.github.middleware.aggregate.example"/>
     <aop:aspectj-autoproxy/>
-    <bean name="contextHolder" class="com.github.middleware.aggregate.spring.init.SpringContextHolder"/>
+    <!--<bean name="contextHolder" class="com.github.middleware.aggregate.spring.init.SpringContextHolder"/>-->
     <bean name="dataAggregeAspect" class="com.github.middleware.aggregate.spring.init.DataAggregeAspect"/>
 </beans>

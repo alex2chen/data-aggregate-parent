@@ -22,6 +22,13 @@ public class SpringContextHolder implements ApplicationContextAware {
         return appContext.getBean(requireType);
     }
 
+    public static <T> Optional<T> getBean(ApplicationContext applicationContext, String beanName) {
+        if (appContext == null) {
+            appContext = applicationContext;
+        }
+        return getBean(beanName);
+    }
+
     public static <T> Optional<T> getBean(String beanName) {
         if (Strings.isNullOrEmpty(beanName) || appContext == null) {
             return Optional.empty();
@@ -36,7 +43,7 @@ public class SpringContextHolder implements ApplicationContextAware {
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext){
+    public void setApplicationContext(ApplicationContext applicationContext) {
         appContext = applicationContext;
     }
 }

@@ -1,7 +1,9 @@
 package com.github.middleware.aggregate.spring.init;
 
+import com.github.middleware.aggregate.annonation.AggregeEnable;
 import com.github.middleware.aggregate.config.MergeProperties;
 import com.github.middleware.aggregate.core.AggregeEngineActivetor;
+import com.github.middleware.aggregate.core.RequestPayLoad;
 import com.github.middleware.aggregate.core.support.AggregeEngineActivetors;
 import com.github.middleware.aggregate.spring.util.AopUtils;
 import com.google.common.base.Preconditions;
@@ -10,8 +12,11 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import java.lang.reflect.Method;
 import java.util.Optional;
@@ -22,9 +27,10 @@ import java.util.Optional;
  * @Date: created in 2019/1/21.
  */
 @Aspect
-public class DataAggregeAspect implements InitializingBean, DisposableBean {
+public class DataAggregeAspect implements InitializingBean, DisposableBean, ApplicationContextAware {
     private AggregeEngineActivetor ENGINE_ACTIVETOR;
     private MergeProperties config;
+    private static ApplicationContext appContext;
 
     @Pointcut("@annotation(com.github.middleware.aggregate.annonation.AggregeEnable)")
     public void dataAggregeAnnotationPointcut() {
@@ -35,14 +41,16 @@ public class DataAggregeAspect implements InitializingBean, DisposableBean {
     public Object methodsAnnotatedWithAggerege(final ProceedingJoinPoint joinPoint) throws Throwable {
         Method method = AopUtils.getMethodFromTarget(joinPoint);
         Preconditions.checkNotNull(method, "failed to get method from joinPoint: %s", new Object[]{joinPoint});
-        return ENGINE_ACTIVETOR.intercept(method, () -> {
+        AggregeEnable enable = method.getAnnotation(AggregeEnable.class);
+        RequestPayLoad request = new RequestPayLoad(method, appContext, () -> {
             try {
                 return joinPoint.proceed();
             } catch (Throwable throwable) {
-                Throwables.propagate(throwable);
+                Throwables.throwIfUnchecked(throwable);
                 return null;
             }
-        });
+        },enable);
+        return ENGINE_ACTIVETOR.intercept(request);
     }
 
     @Override
@@ -63,5 +71,10 @@ public class DataAggregeAspect implements InitializingBean, DisposableBean {
 
     public AggregeEngineActivetor getEngineActivetor() {
         return ENGINE_ACTIVETOR;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        appContext = applicationContext;
     }
 }
